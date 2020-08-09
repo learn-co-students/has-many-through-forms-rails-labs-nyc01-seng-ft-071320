@@ -1,1 +1,51 @@
+<h1><%= @post.title %></h1>
+<div>
+  <p>
+    <% @post.categories.uniq.each do |category| %>
+      <p style="color: dimgray">Category: #<%= category.name %>&nbsp;</p>
+    <% end %>
+  </p>
+  <h4>Content: <%= @post.content %></h4>
+</div>
 
+<div>
+  <p>Create New Comment:</p>
+  <%= form_for @comment do |f| %>
+    <%= f.hidden_field :post_id, value: @post.id %>
+    <p>
+      <label for="comment_user_id">
+        Your Username?
+      </label>
+      <%= f.collection_select :user_id, User.all, :id, :username, { include_blank: true } %>
+    </p>
+    <p>
+      <%= f.fields_for :user do |user_field| %>
+        <label for="comment_user_attributes_username">Other:</label> <%= user_field.text_field :username %>
+      <% end %>
+    </p>
+    <p>
+      <%= f.text_area :content %>
+    </p>
+    <%= f.submit 'Create Comment' %>
+  <% end %>
+</div>
+
+<div>
+  <p>Comment by:</p>
+  <ul>
+    <% @commenters.each do |commenter| %>
+      <li><%= link_to commenter.username, user_path(commenter) %></li>
+    <% end %>
+  </ul>
+
+  <p>Comments:</p>
+  <ul>
+    <% @post.comments.each do |comment| %>
+      <% if comment.user %>
+        <li><%= "#{comment.user.username} says: #{comment.content}" %></li>
+      <% else %>
+        <li><%= "Anonymous says: #{comment.content}" %></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
