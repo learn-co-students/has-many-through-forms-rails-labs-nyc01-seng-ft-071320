@@ -1,1 +1,14 @@
+<%= @post.title %><br>
+<%= @post.content %><br>
+
+<%= @post.categories.map(&:name).join(' ') %>
+
+<% @post.comments.each do |comment| %>
+  <%= comment.user.username %> says: <%= comment.content %>
+<% end %>
+
+
+<% @post.users.distinct.each do |user | %>
+  <% link_to user.username, user_path(user) %>
+<% end %>
 
