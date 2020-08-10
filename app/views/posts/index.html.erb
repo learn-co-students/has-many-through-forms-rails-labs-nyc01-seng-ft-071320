@@ -1,0 +1,11 @@
+<h1>Post Index Page</h1>
+<p>
+<%@posts.each do |post|%>
+<%=post.title%>
+<%=post.content%>
+    <%post.categories.each do |cat|%>
+    <%=cat.name%>
+    <%end%>
+</p>
+<%end%>
+
