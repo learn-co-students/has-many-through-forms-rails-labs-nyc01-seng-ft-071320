@@ -1,0 +1,8 @@
+</p><% @posts.each do |post| %><br>
+Title: <%= post.title%><br>
+Content: <%= post.content%><br>
+<% post.categories.each do |cat| %></p>
+<p>Category: <%= cat.name %></p>
+<%end%>
+
+<%end%>
